@@ -35,6 +35,7 @@ local StudioPluginGui = require(script.Components.Studio.StudioPluginGui)
 local StudioPluginContext = require(script.Components.Studio.StudioPluginContext)
 local StatusPages = require(script.StatusPages)
 
+
 local AppStatus = strict("AppStatus", {
 	NotConnected = "NotConnected",
 	Settings = "Settings",
@@ -174,6 +175,10 @@ function App:init()
 			self:clearRunningConnectionInfo()
 		end
 	end)
+
+
+
+	self:startSession()
 end
 
 function App:willUnmount()
@@ -649,7 +654,7 @@ function App:endSession()
 end
 
 function App:render()
-	local pluginName = "Rojo " .. Version.display(Config.version)
+	local pluginName = "Rojoo " .. Version.display(Config.version)
 
 	local function createPageElement(appStatus, additionalProps)
 		additionalProps = additionalProps or {}
@@ -845,15 +850,16 @@ function App:render()
 				name = pluginName,
 			}, {
 				button = e(StudioToggleButton, {
-					name = "Rojo",
+					name = "Rojoo",
 					tooltip = "Show or hide the Rojo panel",
 					icon = self.state.toolbarIcon,
 					active = self.state.guiEnabled,
-					enabled = true,
+					enabled = true, -- deactivate GUI
 					onClick = function()
+						print("1")
 						self:setState(function(state)
 							return {
-								guiEnabled = not state.guiEnabled,
+								guiEnabled = not state.guiEnabled, -- deactivate GUI
 							}
 						end)
 					end,
