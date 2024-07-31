@@ -854,12 +854,12 @@ function App:render()
 					tooltip = "Show or hide the Rojo panel",
 					icon = self.state.toolbarIcon,
 					active = self.state.guiEnabled,
-					enabled = true, -- deactivate GUI
+					enabled = false, --true, -- deactivate GUI
 					onClick = function()
 						print("1")
 						self:setState(function(state)
 							return {
-								guiEnabled = not state.guiEnabled, -- deactivate GUI
+								guiEnabled = false, --not state.guiEnabled, -- deactivate GUI
 							}
 						end)
 					end,
