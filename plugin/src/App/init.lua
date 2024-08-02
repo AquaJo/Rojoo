@@ -35,7 +35,6 @@ local StudioPluginGui = require(script.Components.Studio.StudioPluginGui)
 local StudioPluginContext = require(script.Components.Studio.StudioPluginContext)
 local StatusPages = require(script.StatusPages)
 
-
 local AppStatus = strict("AppStatus", {
 	NotConnected = "NotConnected",
 	Settings = "Settings",
@@ -175,8 +174,6 @@ function App:init()
 			self:clearRunningConnectionInfo()
 		end
 	end)
-
-
 
 	self:startSession()
 end
@@ -856,7 +853,9 @@ function App:render()
 					active = self.state.guiEnabled,
 					enabled = false, --true, -- deactivate GUI
 					onClick = function()
-						Log.warn("This plugin is supposed to run automatically with AquaJo's workflow, therefore no GUI is needed")
+						Log.warn(
+							"This plugin is supposed to run automatically with AquaJo's workflow, therefore no GUI is needed"
+						)
 						self:setState(function(state)
 							return {
 								guiEnabled = false, --not state.guiEnabled, -- deactivate GUI
