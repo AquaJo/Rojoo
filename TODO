@@ -1,0 +1,8 @@
+- Find a fix, so that the plugin only wants to connect the first time roblox opens!
+
+notes:
+git submodule update --init --recursive
+
+idk if needed:
+git clone --recurse-submodules <repository-url>
+git submodule update --recursive --remote
