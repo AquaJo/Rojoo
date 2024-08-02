@@ -856,7 +856,7 @@ function App:render()
 						Log.warn(
 							"This plugin is supposed to run automatically with AquaJo's workflow, therefore no GUI is needed"
 						)
-						self:setState(function(state)
+						self:setState(function()
 							return {
 								guiEnabled = false, --not state.guiEnabled, -- deactivate GUI
 							}
