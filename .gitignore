@@ -19,3 +19,8 @@
 
 # Snapshot files from the 'insta' Rust crate
 **/*.snap.new
+
+
+
+# AquaJos ignore
+/plugin/a_*
