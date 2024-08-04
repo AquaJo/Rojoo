@@ -1,4 +1,4 @@
-[Rojo](https://github.com/rojo-rbx/rojo) plugin but with a few changes matching my workflow.
+[Rojo](https://github.com/rojo-rbx/rojo) plugin but with a few changes matching my workflow. Only use this "fork" with [RobloxStarter](https://github.com/AquaJo/RobloxStarter)
 
 ---
 
