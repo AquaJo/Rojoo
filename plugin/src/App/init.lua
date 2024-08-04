@@ -174,8 +174,9 @@ function App:init()
 			self:clearRunningConnectionInfo()
 		end
 	end)
-
-	self:startSession()
+	if RunService:IsServer() and self:isFirstStart() then
+		self:startSession()
+	end
 end
 
 function App:willUnmount()
@@ -407,6 +408,52 @@ function App:useRunningConnectionInfo()
 
 	self.setHost(host)
 	self.setPort(port)
+end
+
+function App:isFirstStart()
+	local host, port = self:getHostAndPort()
+
+	local baseUrl = if string.find(host, "^https?://")
+		then string.format("%s:%s", host, port)
+		else string.format("http://%s:%s", host, port)
+	local apiContext = ApiContext.new(baseUrl)
+
+	local resultEvent = Instance.new("BindableEvent")
+	local resultValue = nil
+
+	apiContext
+		:sendFirstRequest()
+		:andThen(function(response)
+			-- Verarbeite die Antwort hier
+			-- self:addNotification(string.format("Received response from 'first' request: %s", tostring(response)), 5)
+			if response.firstStart ~= nil then
+				if response.firstStart == true then
+					resultValue = true
+				else
+					resultValue = false
+				end
+			else
+				Log.warn("firstStart not found in response")
+				resultValue = false
+			end
+			resultEvent:Fire()
+		end)
+		:catch(function(err)
+			local msg = string.format("Failed to send 'first' request: %s", tostring(err))
+			Log.warn(msg)
+			self:addNotification(msg, 10)
+			self:setState({
+				appStatus = AppStatus.Error,
+				errorMessage = msg,
+				toolbarIcon = Assets.Images.PluginButtonWarning,
+			})
+			resultValue = false
+			resultEvent:Fire()
+		end)
+
+	-- Warte synchron auf das Ergebnis
+	resultEvent.Event:Wait()
+	return resultValue
 end
 
 function App:startSession()

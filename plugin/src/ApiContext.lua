@@ -239,4 +239,13 @@ function ApiContext:open(id)
 	end)
 end
 
+function ApiContext:sendFirstRequest()
+	local url = ("%s/api/first"):format(self.__baseUrl)
+
+	return Http.get(url):andThen(rejectFailedRequests):andThen(Http.Response.json):andThen(function(responseBody)
+		-- Log.info("First request response: {:?}", responseBody)
+		return responseBody
+	end)
+end
+
 return ApiContext
